@@ -13,7 +13,6 @@ from sys import argv
 
 # global variables
 trials = 30
-labeling_budget = 800
 batch_size = 10
 colors = ['b', 'g', 'r', 'c', 'm', 'y', 'tab:orange', 'tab:purple', 'tab:brown', 'tab:pink', 'tab:gray']
 marker = '.'
@@ -95,19 +94,19 @@ print('recalls')
 print(np.around(recalls,3))
 print(np.around(standard_errors_rec,3))
 print('f1s')
-print(np.around(f1s,3))
+print(f1s,3)
 print(np.around(standard_errors_f1,3))
 
-blue = '#0000FF'
-green = '#00FF00'
-red = '#FF0000'
-b_gradient = ListedColormap(get_color_gradient(blue, blue, 100))
-g_gradient = ListedColormap(get_color_gradient(green, green, 100))
-r_gradient = ListedColormap(get_color_gradient(red, red, 100))
-bg_gradient = ListedColormap(get_color_gradient(blue, green, 100))
-br_gradient = ListedColormap(get_color_gradient(blue, red, 100))
-gr_gradient = ListedColormap(get_color_gradient(green, red, 100))
-bgr_gradient = ListedColormap(get_color_gradient(blue, green, 50)+get_color_gradient(green, red, 50))
+cyan = '#d95f02'
+magenta = '#1b9e77'
+yellow = '#7570b3'
+b_gradient = ListedColormap(get_color_gradient(cyan, cyan, 100))
+g_gradient = ListedColormap(get_color_gradient(magenta, magenta, 100))
+r_gradient = ListedColormap(get_color_gradient(yellow, yellow, 100))
+bg_gradient = ListedColormap(get_color_gradient(cyan, magenta, 100))
+br_gradient = ListedColormap(get_color_gradient(cyan, yellow, 100))
+gr_gradient = ListedColormap(get_color_gradient(magenta, yellow, 100))
+bgr_gradient = ListedColormap(get_color_gradient(cyan, magenta, 50)+get_color_gradient(magenta, yellow, 50))
 
 fig, ax = plt.subplots(dpi=300)
 N = len(accuracies)
@@ -115,34 +114,31 @@ width = 0.1
 bottom = 0.5
 x = 1/(2*N)*np.arange(1,2*N,2)-width/2
 
-ax.set_title('Accuracies for Passive Learning Methods', fontsize=14)
+# ax.set_title('Accuracies for Passive Learning Methods', fontsize=14)
 ax.set(xlim=(0, 1), ylim=(bottom, 0.9), xmargin=0, xticks=x + width/2, xticklabels=['Thermal\n+RGB\nFused', 'Thermal', 'Thermal\n+LiDAR\nFused', 'Thermal\n+RGB\n+LiDAR\nFused', 'RGB', 'RGB\n+LiDAR\nFused', 'LiDAR'], yticks=np.arange(bottom,1,0.1))
 ax.set_ylabel('Accuracy', fontsize=12)
-tr_fused = gradient_image(ax, x[0], width, bottom, accuracies[0], cmap=bg_gradient)
-plt.errorbar(x[0]+width/2, accuracies[0], 1*np.array(standard_errors_acc[0]), marker=marker, markersize=markersize, color=colors[3])
+gradient_image(ax, x[0], width, bottom, accuracies[0], cmap=bg_gradient)
+plt.errorbar(x[0]+width/2, accuracies[0], 1*np.array(standard_errors_acc[0]), marker=marker, markersize=markersize, color=colors[0])
 gradient_image(ax, x[1], width, bottom, accuracies[1], cmap=b_gradient)
-plt.errorbar(x[1]+width/2, accuracies[1], 1*np.array(standard_errors_acc[1]), marker=marker, markersize=markersize, color=colors[3])
+plt.errorbar(x[1]+width/2, accuracies[1], 1*np.array(standard_errors_acc[1]), marker=marker, markersize=markersize, color=colors[0])
 gradient_image(ax, x[2], width, bottom, accuracies[2], cmap=br_gradient)
-plt.errorbar(x[2]+width/2, accuracies[2], 1*np.array(standard_errors_acc[2]), marker=marker, markersize=markersize, color=colors[3])
+plt.errorbar(x[2]+width/2, accuracies[2], 1*np.array(standard_errors_acc[2]), marker=marker, markersize=markersize, color=colors[0])
 gradient_image(ax, x[3], width, bottom, accuracies[3], cmap=bgr_gradient)
-plt.errorbar(x[3]+width/2, accuracies[3], 1*np.array(standard_errors_acc[3]), marker=marker, markersize=markersize, color=colors[3])
+plt.errorbar(x[3]+width/2, accuracies[3], 1*np.array(standard_errors_acc[3]), marker=marker, markersize=markersize, color=colors[0])
 gradient_image(ax, x[4], width, bottom, accuracies[4], cmap=g_gradient)
-plt.errorbar(x[4]+width/2, accuracies[4], 1*np.array(standard_errors_acc[4]), marker=marker, markersize=markersize, color=colors[3])
+plt.errorbar(x[4]+width/2, accuracies[4], 1*np.array(standard_errors_acc[4]), marker=marker, markersize=markersize, color=colors[0])
 gradient_image(ax, x[5], width, bottom, accuracies[5], cmap=gr_gradient)
-plt.errorbar(x[5]+width/2, accuracies[5], 1*np.array(standard_errors_acc[5]), marker=marker, markersize=markersize, color=colors[3])
+plt.errorbar(x[5]+width/2, accuracies[5], 1*np.array(standard_errors_acc[5]), marker=marker, markersize=markersize, color=colors[0])
 gradient_image(ax, x[6], width, bottom, accuracies[6], cmap=r_gradient)
-plt.errorbar(x[6]+width/2, accuracies[6], 1*np.array(standard_errors_acc[6]), marker=marker, markersize=markersize, color=colors[3])
+plt.errorbar(x[6]+width/2, accuracies[6], 1*np.array(standard_errors_acc[6]), marker=marker, markersize=markersize, color=colors[0])
 plt.subplots_adjust(bottom=0.6)
-plt.savefig('results/figs/passive-learning.png', bbox_inches='tight')
-
-
+plt.savefig('results/figs/passive-learning-accuracies.png', bbox_inches='tight')
 
 def get_accuracies(modality, start_trial, end_trial):
     return np.array([list(np.load('results/'+modality+'/results-'+str(trial)+'.npy')) for trial in range(start_trial, end_trial)])
 
-
 # thermal vs. thermal-RGB fused
 tr_fused_accuracies = get_accuracies(modalities[0], 0, 30).T[0].T
-print(tr_fused_accuracies.shape)
+print(tr_fused_accuracies)
 thermal_accuracies = get_accuracies(modalities[1], 0, 30).T[0].T
 print(two_sample_t_test(tr_fused_accuracies, thermal_accuracies))

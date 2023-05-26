@@ -221,39 +221,35 @@ class CNN:
                 
                 queried_indices = list(np.take(unused_indices, np.flip(np.argsort(differences))[:batch_size])) # selects the images with the biggest difference in prediction from the two models
 
-        elif query == 'v' or query == 'm' or query == 'a': # rule violation or multimodAL or ablation
-            # if ((query == 'v' or query == 'm') and images_labeled == 0) or query == 'a': # jump-start m and v
-            if query == 'a': # no jump start
-                queried_indices = list(np.take(unused_indices, np.flip(np.argsort(np.take(max_pixel_vals, unused_indices)))[:batch_size]))
-            
-            # if (query == 'v' or query == 'm') and images_labeled != 0: # multimodAL after first round
-            if query == 'v' or query == 'm': # no jump start
-                i = 0
-                queried_indices = [] # initialize an array to store the indices for querying
+        elif query == 'a': # ablation
+            queried_indices = list(np.take(unused_indices, np.flip(np.argsort(np.take(max_pixel_vals, unused_indices)))[:batch_size]))
 
-                while len(queried_indices) < batch_size: # while the number of indices selected for querying is less than the batch size
-                    index = unused_indices[np.flip(np.argsort(np.take(max_pixel_vals, unused_indices)))[i]] # sort the indices according to which ones correspond to images with the highest maximum pixel values and select the ith one
+        elif query == 'v' or query == 'm': # rule violation or multimodAL
+            i = 0
+            queried_indices = [] # initialize an array to store the indices for querying
 
-                    with torch.no_grad(): # no gradients should be computed during model inference
-                        score = 0 # the image starts with a score of 0
+            while len(queried_indices) < batch_size: # while the number of indices selected for querying is less than the batch size
+                index = unused_indices[np.flip(np.argsort(np.take(max_pixel_vals, unused_indices)))[i]] # sort the indices according to which ones correspond to images with the highest maximum pixel values and select the ith one
 
-                        for j in range(len(models)): # for each modality
-                            image = torch.FloatTensor(np.array(list(map(list, zip(*self.transform_images(np.array([images[i]])))))[j])).to(self.device) # extract the image in modality j
-                            output = models[j].to(self.device)(image).flatten().cpu().detach().numpy() # model's probability of the image being a midden
-                            score += weights[j] * output # increment the score          
-                    
-                    # predicted = np.around(score)
-                    predicted = np.random.binomial(1, score) # assign the image to a class using a binomial draw to reflect the model(s)' uncertainty
-                    i += 1 # move on to the next image
+                with torch.no_grad(): # no gradients should be computed during model inference
+                    score = 0 # the image starts with a score of 0
 
-                    if query == 'm' and predicted[0] == 1: # if the image is predicted to be a midden
-                        queried_indices += [index] # add it to the list for querying
-                    
-                    if query == 'v' and predicted[0] == 0: # if the image is predicted to be empty
-                        queried_indices += [index] # add it to the list for querying
-                    
-                    if i == len(unused_indices): # if all the images have been predicted on
-                        break # exit the loop
+                    for j in range(len(models)): # for each modality
+                        image = torch.FloatTensor(np.array(list(map(list, zip(*self.transform_images(np.array([images[i]])))))[j])).to(self.device) # extract the image in modality j
+                        output = models[j].to(self.device)(image).flatten().cpu().detach().numpy() # model's probability of the image being a midden
+                        score += weights[j] * output # increment the score          
+                
+                predicted = np.random.binomial(1, score) # assign the image to a class using a binomial draw to reflect the model(s)' uncertainty
+                i += 1 # move on to the next image
+
+                if query == 'm' and predicted[0] == 1: # if the image is predicted to be a midden
+                    queried_indices += [index] # add it to the list for querying
+                
+                if query == 'v' and predicted[0] == 0: # if the image is predicted to be empty
+                    queried_indices += [index] # add it to the list for querying
+                
+                if i == len(unused_indices): # if all the images have been predicted on
+                    break # exit the loop
 
         return queried_indices # send the queried indices back for training
     
@@ -280,7 +276,7 @@ class CNN:
                         correct[i] += (predicted == queried_labels).sum().item() # count how many images the model classified correctly
 
                 weights = np.array(correct)/np.sum(correct) # update the weights according to the new classifications         
-                print('Weights =', weights)
+                print('Weights =', np.around(weights,3))
 
             for i in reversed(range(len(unused_indices))): # for each unused index
                 if unused_indices[i] in used_indices: # if the index has been used
