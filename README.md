@@ -1,7 +1,9 @@
 README
 
-Modes: passive ("p") and active ("a")
+Modes: passive ("p") and active ("a") 
+
 Modalities: thermal ("t"), RGB ("r"), LiDAR ("l"), thermal-RGB fused ("tr-fused"), thermal-LiDAR fused ("tl-fused"), RGB-LiDAR fused ("rl fused"), and thermal-RGB-LiDAR fused ("trl-fused")
+
 Queries: random ("r"), uncertainty ("u"), positive certainty ("c"), disagree ("d"), and multimodAL ("m")
 
 File structure
