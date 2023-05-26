@@ -8,23 +8,39 @@ Queries: random ("r"), uncertainty ("u"), positive certainty ("c"), disagree ("d
 
 File structure
 1. code
+
 1a. align-orthomosaics-and-middens.py: crops and aligns the orthomosaics and maps the midden locations onto them
+
 1b. analyze-active-results.py: generates plots for accuracy and the fraction of middens found for the active learning methods
+
 1c. analyze-passive-results.py: generates a plot for accuracy for the passive learning methods
+
 1d. cnn.py: trains and tests one or more models
+
 1e. cluster-middens.py: generates the midden map from a list of midden locations and identifies clusters using K-means
+
 1f. fuse.py: generates the thermal-RGB, thermal-LiDAR, RGB-LiDAR, and thermal-RGB-LiDAR fusions
+
 1g. merge-tiffs.py: if an orthomosaic is in the form of several tiffs, use this script to merge them into a single tiff
+
 1h. midden-probability.py: calculates the probability of an image containing a midden given its maximum pixel value is no less than a threshold
+
 1i. process-data.py: crops overlapping images from the orthomosaics and saves them along with their labels (midden/empty) and identifiers (integer)
+
 1j. run-cnn.py: runs trials, including generating the train-test split, running the model, and saving the results
+
 1k. view-images.py: view the image corresponding to a certain identifier
 
 2. figures
+
 2a. active-learning-accuracies.png: displays the accuracies achieved by various active learning methods on a held-out test set as the number of labeled images increases
+
 2b. active-learning-fraction-middens-found.png: displays the fraction of middens discovered in the training set as the number of labeled images increases
+
 2c. clustered-middens.png: midden map with clusters identified
+
 2d. midden-probability.png: plots the probability of being a midden vs. the threshold on the maximum thermal pixel value
+
 2e. passive-learning-accuracies.png: displays the accuracies achieved on a test set by models passively trained on different data modalities
 
 Instructions
