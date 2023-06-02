@@ -1,4 +1,5 @@
 # Rhino Midden Detector
+<img src="https://github.com/lgordon99/rhino-midden-detector/blob/main/images/rhino-icon.png" width="33%" height="auto">
 
 ## Modes
 * passive (```p```)
@@ -34,7 +35,7 @@ code
 * run-cnn.py: runs trials, including generating the train-test split, running the model, and saving the results
 * view-images.py: view the image corresponding to a certain identifier
 
-figs
+figures
 * active-learning-accuracies.png: displays the accuracies achieved by various active learning methods on a held-out test set as the number of labeled images increases
 * active-learning-fraction-middens-found.png: displays the fraction of middens discovered in the training set as the number of labeled images increases
 * clustered-middens.png: midden map with clusters identified
