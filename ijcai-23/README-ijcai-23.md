@@ -1,4 +1,4 @@
-# Rhino Midden Detector
+# Rhino Midden Detector - IJCAI '23
 <img src="https://github.com/lgordon99/rhino-midden-detector/blob/main/images/rhino-icon.png" width="33%" height="auto">
 
 ## Modes
