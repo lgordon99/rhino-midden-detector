@@ -48,8 +48,22 @@ figures
 3. Save the orthomosaic tiffs in the ```tiffs``` folder.
 4. Create a ```data``` folder.
 5. Save the midden coordinates as a CSV with "x" and "y" column headings in the ```data``` folder.
-6. In the terminal, run the command ```python align-orthomosaics-and-middens.py```. Note you may need to change how the orthomosaics are aligned depending on their respective extents.
-7. In the terminal, run the command ```python process-data.py```.
-8. In the terminal, run the command ```python fuse.py```.
-9. In the terminal, run the command ```python run-cnn.py TRIALS SAVE MODE MODALITY QUERY```, where ```TRIALS``` is an integer, ```SAVE``` is a boolean, and ```MODE```, ```MODALITY```, and ```QUERY``` are selected from the lists above. ```QUERY``` can be left blank in passive mode (```MODE```=```p```).
+6. In the terminal, run the command
+```bash
+python align-orthomosaics-and-middens.py
+```
+Note you may need to change how the orthomosaics are aligned depending on their respective extents.\
+7. In the terminal, run the command
+```bash
+python process-data.py
+```
+8. In the terminal, run the command
+```bash
+python fuse.py
+```
+9. In the terminal, run the command
+```bash
+python run-cnn.py TRIALS SAVE MODE MODALITY QUERY
+```
+where ```TRIALS``` is an integer, ```SAVE``` is a boolean, and ```MODE```, ```MODALITY```, and ```QUERY``` are selected from the lists above. ```QUERY``` can be left blank in passive mode (```MODE```=```p```).\
 10. Once all trials have been run, use ```analyze-passive-results.py``` and ```analyze-active-results.py``` to generate the plots.
