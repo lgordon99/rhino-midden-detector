@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../static/styles.css">
+        <script src="../static/script.js"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Livvic:wght@400;700">
+        <title>Rhino Midden Detector</title>
+    </head>
+
+    <body onload="initiate()">
+        <h1>GeoLABEL</h1>
+        <h2 id="batch message">Waiting for batch 0...</h2>
+        <div id="image-with-settings">
+            <div id="modality-buttons">
+                <button class="setting-button modality-button" id="thermal" onclick="setModality('thermal'); showImage()"><span>Thermal</span></button>
+                <button class="setting-button modality-button" id="rgb" onclick="setModality('rgb'); showImage()"><span>RGB</span></button>
+            </div>
+            <img alt="candidate">
+            <div id="zoom-buttons">
+                <button class="setting-button zoom-button" id="in" onclick="setZoom('in'); showImage()">+</button>
+                <button class="setting-button zoom-button" id="out" onclick="setZoom('out'); showImage()">-</button>
+            </div>
+        </div>
+        <div id="label-buttons">
+            <button class="label-button" id="midden" onclick="middenLabel()">Midden</button>
+            <button class="label-button" id="empty" onclick="emptyLabel()">Not Midden</button>
+        </div>
+        
+    </body>
+</html>
