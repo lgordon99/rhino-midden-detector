@@ -1,5 +1,22 @@
 # Rhino Midden Detector - IJCAI '23
 <img src="https://github.com/lgordon99/rhino-midden-detector/blob/main/images/rhino-icon.png" width="33%" height="auto">
+This is the GitHub repository for [Gordon et al.](https://www.ijcai.org/proceedings/2023/0663.pdf). To cite the paper, use
+```
+@inproceedings{ijcai2023p663,
+  title     = {Find Rhinos without Finding Rhinos: Active Learning with Multimodal Imagery of South African Rhino Habitats},
+  author    = {Gordon, Lucia and Behari, Nikhil and Collier, Samuel and Bondi-Kelly, Elizabeth and Killian, Jackson A. and Ressijac, Catherine and Boucher, Peter and Davies, Andrew and Tambe, Milind},
+  booktitle = {Proceedings of the Thirty-Second International Joint Conference on
+               Artificial Intelligence, {IJCAI-23}},
+  publisher = {International Joint Conferences on Artificial Intelligence Organization},
+  editor    = {Edith Elkind},
+  pages     = {5977--5985},
+  year      = {2023},
+  month     = {8},
+  note      = {AI for Good},
+  doi       = {10.24963/ijcai.2023/663},
+  url       = {https://doi.org/10.24963/ijcai.2023/663},
+}
+```
 
 ## Modes
 * passive (```p```)
