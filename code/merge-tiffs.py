@@ -8,7 +8,7 @@ class MergeTiffs:
         self.mergedTiffPath = ''
 
         self.getPaths()
-        gdal.Warp(self.mergedTiffPath, self.tiffPaths, format = 'GTiff')
+        gdal.Warp(self.mergedTiffPath, self.tiffPaths, format='GTiff')
     
     def getPaths(self):
         numTiffs = int(input('How many tiffs would you like to merge?\n'))

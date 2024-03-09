@@ -2,9 +2,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from sys import argv
 
-folder = argv[1]
 labels = np.load('data/labels.npy')
 midden_indices = np.where(labels == 1)[0]
 empty_indices = np.where(labels == 0)[0]
@@ -38,4 +36,4 @@ plt.subplots_adjust(left=0.4, bottom=0.5)
 plt.plot(range(int(np.amax(max_pixel_vals_middens))), [prob_midden_given_MPV_over_n(n) for n in range(int(np.amax(max_pixel_vals_middens)))], c='b')
 plt.vlines(optimal_value, 0, 1, colors='g', linestyles='dashed', label='target value')
 plt.legend(fontsize=12)
-plt.savefig(folder+'/results/figs/midden-probability.png', bbox_inches='tight')
+plt.savefig('results/figs/midden-probability.png', bbox_inches='tight')

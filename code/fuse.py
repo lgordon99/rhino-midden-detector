@@ -10,19 +10,17 @@ import numpy as np
 from PIL import Image
 from shutil import rmtree
 from cv2 import imread
-from sys import argv
 
 # global variables
-folder = argv[1]
-thermal_images = np.load(folder+'/data/thermal/thermal-images.npy')
-rgb_images = np.load(folder+'/data/rgb/rgb-images.npy')
-lidar_images = np.load(folder+'/data/lidar/lidar-images.npy')
+thermal_images = np.load('data/thermal/thermal-images.npy')
+rgb_images = np.load('data/rgb/rgb-images.npy')
+lidar_images = np.load('data/lidar/lidar-images.npy')
 
 # folders
-if os.path.exists(folder+'/data/fused'):
-    rmtree(folder+'/data/fused')
+if os.path.exists('data/fused'):
+    rmtree('data/fused')
 
-os.mkdir(folder+'/data/fused')
+os.mkdir('data/fused')
 
 # functions
 def fuse(modality1, images1, modality2, images2, modality3=None, images3=None):
@@ -44,13 +42,13 @@ def fuse(modality1, images1, modality2, images2, modality3=None, images3=None):
     return fused_arrays
 
 # generate and save fused image arrays
-np.save(folder+'/data/fused/tr-fused', fuse('thermal', thermal_images, 'rgb', rgb_images))
+np.save('data/fused/tr-fused', fuse('thermal', thermal_images, 'rgb', rgb_images))
 print('thermal-RGB fusing done')
-np.save(folder+'/data/fused/tl-fused', fuse('thermal', thermal_images, 'lidar', lidar_images))
+np.save('data/fused/tl-fused', fuse('thermal', thermal_images, 'lidar', lidar_images))
 print('thermal-LiDAR fusing done')
-np.save(folder+'/data/fused/rl-fused', fuse('rgb', rgb_images, 'lidar', lidar_images))
+np.save('data/fused/rl-fused', fuse('rgb', rgb_images, 'lidar', lidar_images))
 print('RGB-LiDAR fusing done')
-np.save(folder+'/data/fused/trl-fused', fuse('thermal', thermal_images, 'rgb', rgb_images, 'lidar', lidar_images))
+np.save('data/fused/trl-fused', fuse('thermal', thermal_images, 'rgb', rgb_images, 'lidar', lidar_images))
 print('thermal-RGB-LiDAR fusing done')
 
 # remove temporary image
